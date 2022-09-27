@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dongle:wght@700&family=Fredoka+One&family=Hubballi&family=Montserrat:wght@800&family=Patrick+Hand&family=Roboto:wght@100;400&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <title>Desk Shelf 1 | Object Detector</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>  
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dongle:wght@700&family=Fredoka+One&family=Hubballi&family=Montserrat:wght@800&family=Patrick+Hand&family=Roboto:wght@100;400&family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.js"></script>
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+    <link href="objects.css" rel="stylesheet">
+</head>
+<body>
+    <h1>Desk Shelf 1</h1>
+    <a style="text-decoration: none;" href="index.html"><button class="home">Home</button></a>
+    <br>
+    <h3 id="status" ></h3>
+    <br>
+    <h3 id="howmany" ></h3>
+    <button onclick="start()">Start</button>
+    <script>
+        img="";
+status="";
+objects=[];
+
+function preload(){
+    img=loadImage("shelf1.jpeg");
+}
+
+function setup(){
+    canvas=createCanvas(550,350);
+    canvas.center();
+
+}
+
+function gotResult(error,results){
+    if(error){
+        console.log(error);
+    }
+    else{
+        console.log(results);
+        objects=results;
+    }
+}
+
+function draw(){
+    image(img, 0, 0, 550, 350);
+
+    if(status != ""){    
+        r=random(255);
+        g=random(255);
+        b=random(255);
+        objectDetector.detect(img,gotResult);
+        for(i=0; i<objects.length; i++)
+        {
+            document.getElementById("status").innerHTML="Object Detected!";
+            document.getElementById("howmany").innerHTML= objects.length+" objects were detected!";
+            fill("red");
+            percent =  floor(objects[i].confidence * 100);
+            text(objects[i].label + " " + percent + "%", objects[i].x+10, objects[i].y+20);
+            noFill();
+            console.log("xyz");
+            stroke("red");
+            rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
+        }
+    }
+}
+
+function modelLoaded(){
+    console.log("model loaded");
+    status=true;
+}
+
+function start(){
+    objectDetector=ml5.objectDetector('cocossd',modelLoaded);
+    document.getElementById("status").innerHTML="Detecting objects..";
+}
+    </script>
+    <style>
+        body{
+    font-family: montserrat;
+}
+body{
+    background-image: url("https://i.pinimg.com/736x/4b/c6/19/4bc6195a818a598bc5f60603421bd6b0.jpg");
+    background-size:cover;
+    text-align:center;
+}
+h1 {
+    font-size: 50px;
+    background: -webkit-linear-gradient( rgb(255, 70, 249), rgb(255, 171, 75));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  button{
+    background: linear-gradient(60deg, rgb(255, 74, 198),rgb(255, 161, 93));
+    color: white;
+    border-radius: 7px;
+    border: none;
+    font-size: 30px;
+    font-family: montserrat;
+
+  }
+  .home{
+    float: right;
+    margin-top: -95px;
+    margin-right: 30px;
+  }
+
+  h3{
+    margin-top: -35px;
+  }
+  canvas{
+    border-radius: 10px;
+  }
+    </style>
+</body>
+</html>

@@ -1,0 +1,40 @@
+body{
+    font-family: montserrat;
+}
+body{
+    background-image: url("https://i.pinimg.com/736x/4b/c6/19/4bc6195a818a598bc5f60603421bd6b0.jpg");
+    background-size:cover;
+    text-align:center;
+}
+h1 {
+    font-size: 90px;
+    background: -webkit-linear-gradient( rgb(255, 70, 249), rgb(255, 171, 75));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .div1{
+    float: left;
+    text-align: left;
+    margin-left: 30px;
+    width: 700px;
+  }
+  h2{
+    margin-top: -70px;
+  }
+        
+  button{
+    background: linear-gradient(60deg, rgb(255, 74, 198),rgb(255, 161, 93));
+    color: white;
+    border-radius: 7px;
+    border: none;
+    font-size: 50px;
+    font-family: montserrat;
+  }
+.div2{
+ float:right;
+ margin-top: 40PX;
+ margin-right: 50PX;
+}
+button:hover{
+  cursor: pointer;
+}
